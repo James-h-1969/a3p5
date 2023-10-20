@@ -1,0 +1,83 @@
+q0 * 1 * * * r one_read_0
+q0 * 0 * * * r zero_read_0
+q0 * _ * * * * check_final
+
+one_read_0 _ * * * r * one_read_0
+one_read_0 # * A * r * find_transition_1
+
+zero_read_0 _ * * * r * zero_read_0
+zero_read_0 # * A * r * find_transition_0
+
+find_transition_1 # * * * * * halt-reject
+find_transition_1 * * * * r * find_transition_1a
+find_transition_1a 1 * * * l * mark_hash_1
+find_transition_1a * * * * r * find_transition_1b
+find_transition_1b # * * * r * find_transition_1
+
+mark_hash_1 * * * * l * mark_hash_1a
+mark_hash_1a # * B * l * find_start_a
+mark_hash_1a A * * * l * stay_put
+
+find_transition_0 1 * * * l * mark_hash_0
+find_transition_0 # * * * * * halt-reject
+find_transition_0 0 * * * r * find_transition_0a
+find_transition_0a * * * * r * find_transition_0b
+find_transition_0b # * * * r * find_transition_0
+find_transition_0b A * # * * * finish_at_start
+
+finish_at_start _ * * * r * q0
+finish_at_start * * * * l * finish_at_start
+
+mark_hash_0 # * B * l * find_start_a
+
+find_start_a A * * * r * find_hash
+find_start_a * * * * l * find_start_a
+
+find_hash # * M * r * add_to_end
+find_hash B * * * r * go_to_state
+find_hash * * * * r * find_hash
+
+add_to_end _ * D * l * find_start_a
+add_to_end * * * * r * add_to_end
+
+go_to_state _ * * * r * find_double_hash
+go_to_state A * # * l * go_to_state
+go_to_state Q * * * r * find_double_hash
+go_to_state * * * * l * go_to_state
+
+find_double_hash # * * * r * check_double
+find_double_hash * * * * r * find_double_hash
+
+check_double # * Q * r * delete_from_end
+check_double * * * * r * find_double_hash
+
+delete_from_end D * _ * l * go_to_state
+delete_from_end _ * * * l * final_state
+delete_from_end * * * * r * delete_from_end
+
+final_state Q * E * l * reset
+final_state * * * * l * final_state
+
+reset A * # * l * reset
+reset B * # * l * reset
+reset M * # * l * reset
+reset Q * # * l * reset
+reset _ * * * r * reset2
+reset * * * * l * reset
+
+reset2 A * # * r * reset2
+reset2 B * # * r * reset2
+reset2 M * # * r * reset2
+reset2 Q * # * r * reset2
+reset2 _ * * * l * find_e
+reset2 * * * * r * reset2
+
+find_e E * # * * * q0
+find_e * * * * l * find_e
+
+check_final # * * * r * check_double_final
+check_final * * * * r * check_final
+
+check_double_final # * * * * * halt-reject
+check_double_final _ * * * * * halt-accept
+check_double_final * * * * r * check_final
