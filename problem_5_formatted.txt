@@ -81,3 +81,6 @@ check_final * * * * r * check_final
 check_double_final # * * * * * halt-reject
 check_double_final _ * * * * * halt-accept
 check_double_final * * * * r * check_final
+
+stay_put _ * * * r * 0
+stay_put * * * * l * stay_put
