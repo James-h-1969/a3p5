@@ -1,6 +1,6 @@
-q0 * 1 * * * r one_read_0
-q0 * 0 * * * r zero_read_0
-q0 * _ * * * * check_final
+0 * 1 * * * r one_read_0
+0 * 0 * * * r zero_read_0
+0 * _ * * * * check_final
 
 one_read_0 _ * * * r * one_read_0
 one_read_0 # * A * r * find_transition_1
@@ -25,7 +25,7 @@ find_transition_0a * * * * r * find_transition_0b
 find_transition_0b # * * * r * find_transition_0
 find_transition_0b A * # * * * finish_at_start
 
-finish_at_start _ * * * r * q0
+finish_at_start _ * * * r * 0
 finish_at_start * * * * l * finish_at_start
 
 mark_hash_0 # * B * l * find_start_a
@@ -72,7 +72,7 @@ reset2 Q * # * r * reset2
 reset2 _ * * * l * find_e
 reset2 * * * * r * reset2
 
-find_e E * # * * * q0
+find_e E * # * * * 0
 find_e * * * * l * find_e
 
 check_final # * * * r * check_double_final
