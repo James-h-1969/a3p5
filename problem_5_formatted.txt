@@ -16,7 +16,7 @@ find_transition_1b # * * * r * find_transition_1
 
 mark_hash_1 * * * * l * mark_hash_1a
 mark_hash_1a # * B * l * find_start_a
-mark_hash_1a A * * * l * stay_put
+mark_hash_1a A * # * l * stay_put
 
 find_transition_0 1 * * * l * mark_hash_0
 find_transition_0 # * * * * * halt-reject
