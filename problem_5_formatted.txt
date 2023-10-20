@@ -29,6 +29,7 @@ finish_at_start _ * * * r * 0
 finish_at_start * * * * l * finish_at_start
 
 mark_hash_0 # * B * l * find_start_a
+mark_hash_0 A * # * l * stay_put
 
 find_start_a A * * * r * find_hash
 find_start_a * * * * l * find_start_a
